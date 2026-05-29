@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOVE Clínica · Fisioteràpia & Readaptació</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── RESET & BASE ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #080808;
+      --dark:    #111111;
+      --card:    #161616;
+      --border:  #252525;
+      --gold:    #C9A86C;
+      --gold-dim:#9A7C4A;
+      --white:   #FFFFFF;
+      --gray:    #8A8A8A;
+      --light:   #D0D0D0;
+      --font:    'Urbanist', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    /* ─── SCROLLBAR ─────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+    /* ─── NAV ───────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(8,8,8,0.88);
+      backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+    .nav-logo {
+      font-size: 20px; font-weight: 800; letter-spacing: 0.12em;
+      color: var(--white); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo .runner {
+      width: 22px; height: 22px; fill: var(--gold);
+    }
+    .nav-links {
+      display: flex; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      color: var(--light); text-decoration: none;
+      font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      padding: 9px 22px;
+      background: var(--gold);
+      color: var(--black);
+      border-radius: 100px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: #e0bb7a; transform: scale(1.03); }
+
+    /* ─── HERO ──────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 700px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .hero-bg video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.28) saturate(0.7);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: radial-gradient(ellipse 80% 70% at 50% 60%, rgba(201,168,108,0.06) 0%, transparent 70%),
+                  linear-gradient(to bottom, transparent 60%, var(--black) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 28px;
+      padding: 0 24px;
+      animation: heroReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.25em;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .hero-title {
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 900; letter-spacing: -0.02em; line-height: 0.92;
+      color: var(--white);
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 20px); font-weight: 400;
+      color: var(--light); letter-spacing: 0.06em;
+      opacity: 0.85;
+    }
+    .hero-tagline {
+      font-size: clamp(13px, 1.5vw, 16px); font-weight: 500;
+      color: var(--gray); font-style: italic; letter-spacing: 0.05em;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      margin-top: 8px;
+    }
+    .btn-primary {
+      padding: 14px 36px;
+      background: var(--gold);
+      color: var(--black);
+      border-radius: 100px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: #e0bb7a;
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px rgba(201,168,108,0.3);
+    }
+    .btn-ghost {
+      padding: 14px 36px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      border-radius: 100px;
+      font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,108,0.07);
+    }
+    .hero-scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--gray); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      animation: bounce 2.4s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(8px); }
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+
+    /* ─── SECTION BASE ──────────────────────────────────────── */
+    section { position: relative; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.25em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-size: clamp(32px, 5vw, 64px);
+      font-weight: 800; letter-spacing: -0.02em; line-height: 1.08;
+      color: var(--white);
+    }
+    .section-desc {
+      font-size: clamp(15px, 1.8vw, 18px); font-weight: 400;
+      color: var(--gray); line-height: 1.7;
+      max-width: 600px;
+    }
+    .gold-line {
+      width: 48px; height: 2px;
+      background: var(--gold);
+      margin: 24px 0;
+    }
+
+    /* ─── SCROLL REVEAL ─────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ─── MANIFESTO ─────────────────────────────────────────── */
+    #manifesto {
+      padding: 140px 0;
+      background: var(--black);
+    }
+    .manifesto-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 48px;
+      text-align: center;
+    }
+    .manifesto-quote {
+      font-size: clamp(28px, 4.5vw, 58px);
+      font-weight: 300; line-height: 1.3; letter-spacing: -0.01em;
+      color: var(--white);
+    }
+    .manifesto-quote strong {
+      font-weight: 800; color: var(--gold);
+    }
+    .manifesto-small {
+      margin-top: 40px;
+      font-size: 16px; color: var(--gray); line-height: 1.7;
+      font-weight: 400;
+    }
+
+    /* ─── SERVICES ──────────────────────────────────────────── */
+    #services {
+      padding: 120px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .services-header {
+      margin-bottom: 72px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .service-card {
+      background: var(--card);
+      padding: 48px 40px;
+      border: 1px solid var(--border);
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .service-card:hover {
+      background: #1c1c1c;
+      border-color: var(--gold-dim);
+      transform: translateY(-4px);
+      z-index: 2;
+    }
+    .service-icon {
+      width: 48px; height: 48px;
+      margin-bottom: 28px;
+      color: var(--gold);
+    }
+    .service-icon svg { width: 100%; height: 100%; }
+    .service-name {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.01em;
+      color: var(--white); margin-bottom: 14px;
+    }
+    .service-desc {
+      font-size: 14px; color: var(--gray); line-height: 1.7;
+    }
+
+    /* ─── GALLERY ───────────────────────────────────────────── */
+    #space {
+      padding: 120px 0;
+      background: var(--black);
+    }
+    .space-intro {
+      margin-bottom: 72px;
+    }
+    .gallery-featured {
+      position: relative;
+      height: 580px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .gallery-featured img {
+      transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gallery-featured:hover img { transform: scale(1.04); }
+    .gallery-featured-caption {
+      position: absolute; bottom: 28px; left: 32px;
+      background: rgba(8,8,8,0.72);
+      backdrop-filter: blur(10px);
+      padding: 10px 20px;
+      border-radius: 100px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--gold); text-transform: uppercase;
+      border: 1px solid rgba(201,168,108,0.3);
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 40px 20px 16px;
+      background: linear-gradient(to top, rgba(8,8,8,0.9), transparent);
+      font-size: 12px; font-weight: 600; letter-spacing: 0.1em;
+      color: var(--light); text-transform: uppercase;
+    }
+
+    /* ─── DIFFERENTIATORS ───────────────────────────────────── */
+    #why {
+      padding: 120px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 64px 80px;
+      margin-top: 72px;
+    }
+    .why-item { display: flex; gap: 24px; }
+    .why-number {
+      font-size: 48px; font-weight: 900; line-height: 1;
+      color: var(--border);
+      flex-shrink: 0; min-width: 56px;
+      transition: color 0.3s;
+    }
+    .why-item:hover .why-number { color: var(--gold-dim); }
+    .why-body {}
+    .why-title {
+      font-size: 20px; font-weight: 700; margin-bottom: 12px;
+      color: var(--white); letter-spacing: -0.01em;
+    }
+    .why-desc {
+      font-size: 14px; color: var(--gray); line-height: 1.7;
+    }
+
+    /* ─── TEAM ──────────────────────────────────────────────── */
+    #team {
+      padding: 120px 0;
+      background: var(--black);
+      border-top: 1px solid var(--border);
+    }
+    .team-header { margin-bottom: 72px; }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .team-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .team-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-6px);
+    }
+    .team-avatar {
+      height: 340px;
+      background: var(--dark);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .team-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(12%) contrast(1.04);
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .team-card:hover .team-avatar img {
+      transform: scale(1.05);
+    }
+    .team-info { padding: 32px; }
+    .team-name {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.01em;
+      color: var(--white); margin-bottom: 6px;
+    }
+    .team-role {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .team-spec {
+      font-size: 13px; color: var(--gray); line-height: 1.6;
+    }
+    .team-spec li { list-style: none; padding: 4px 0; display: flex; gap: 8px; }
+    .team-spec li::before { content: "—"; color: var(--gold-dim); flex-shrink: 0; }
+
+    /* ─── PRICES ────────────────────────────────────────────── */
+    #prices {
+      padding: 120px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .prices-header { margin-bottom: 72px; }
+    .prices-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    .price-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 48px 36px;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .price-card:hover {
+      border-color: var(--gold-dim);
+      transform: translateY(-4px);
+    }
+    .price-card.featured {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .price-card.featured .price-amount,
+    .price-card.featured .price-name,
+    .price-card.featured .price-note,
+    .price-card.featured .price-savings,
+    .price-card.featured .price-feature { color: var(--black); }
+    .price-card.featured .price-feature::before { color: var(--black); opacity: 0.5; }
+    .price-badge {
+      position: absolute; top: 16px; right: 16px;
+      background: var(--black);
+      color: var(--gold);
+      font-size: 10px; font-weight: 800; letter-spacing: 0.15em;
+      padding: 5px 12px; border-radius: 100px; text-transform: uppercase;
+    }
+    .price-name {
+      font-size: 13px; font-weight: 700; letter-spacing: 0.12em;
+      color: var(--gray); text-transform: uppercase; margin-bottom: 20px;
+    }
+    .price-amount {
+      font-size: 52px; font-weight: 900; letter-spacing: -0.03em;
+      color: var(--white); line-height: 1;
+    }
+    .price-amount span {
+      font-size: 20px; font-weight: 500; vertical-align: top;
+      margin-top: 10px; display: inline-block;
+    }
+    .price-note {
+      font-size: 13px; color: var(--gray); margin-top: 6px;
+    }
+    .price-savings {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
+      color: var(--gold); margin-top: 4px;
+    }
+    .price-card.featured .price-savings { color: var(--black); opacity: 0.7; }
+    .price-divider {
+      height: 1px; background: var(--border);
+      margin: 28px 0;
+    }
+    .price-card.featured .price-divider { background: rgba(0,0,0,0.2); }
+    .price-features { list-style: none; }
+    .price-feature {
+      font-size: 13px; color: var(--light);
+      padding: 6px 0; display: flex; gap: 10px;
+    }
+    .price-feature::before { content: "✓"; color: var(--gold); font-weight: 800; flex-shrink: 0; }
+    .price-cta {
+      margin-top: 32px; display: block;
+      padding: 13px 24px; border-radius: 100px;
+      text-align: center; font-size: 14px; font-weight: 700;
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: all 0.2s;
+    }
+    .price-cta-dark {
+      border: 1.5px solid var(--border);
+      color: var(--white);
+    }
+    .price-cta-dark:hover { border-color: var(--gold); color: var(--gold); }
+    .price-cta-light {
+      background: var(--black);
+      color: var(--gold);
+    }
+    .price-cta-light:hover { background: #0f0f0f; }
+    .price-note-bottom {
+      margin-top: 48px; text-align: center;
+      font-size: 13px; color: var(--gray);
+    }
+
+    /* ─── CONTACT ───────────────────────────────────────────── */
+    #contact {
+      padding: 120px 0;
+      background: var(--black);
+      border-top: 1px solid var(--border);
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-left {}
+    .contact-form { margin-top: 48px; }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gray); margin-bottom: 10px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 14px 18px;
+      font-family: var(--font);
+      font-size: 15px; color: var(--white);
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: none; min-height: 120px; }
+    .form-group select option { background: var(--card); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-submit {
+      width: 100%; margin-top: 8px;
+      padding: 16px;
+      background: var(--gold);
+      color: var(--black);
+      border: none; border-radius: 100px;
+      font-family: var(--font);
+      font-size: 15px; font-weight: 700; letter-spacing: 0.04em;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { background: #e0bb7a; transform: scale(1.02); }
+    .contact-right { padding-top: 8px; }
+    .contact-info-block {
+      margin-bottom: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-info-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .contact-info-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .contact-info-value {
+      font-size: 18px; font-weight: 600; color: var(--white); margin-bottom: 6px;
+    }
+    .contact-info-sub {
+      font-size: 14px; color: var(--gray);
+    }
+    .social-links {
+      display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .social-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 13px; font-weight: 600; color: var(--light);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+    .social-link svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .map-block {
+      margin-top: 32px;
+      aspect-ratio: 16/9;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .map-placeholder {
+      text-align: center; color: var(--gray);
+    }
+    .map-placeholder svg { width: 40px; height: 40px; margin: 0 auto 12px; opacity: 0.4; }
+    .map-placeholder p { font-size: 14px; }
+
+    /* ─── FOOTER ────────────────────────────────────────────── */
+    footer {
+      padding: 48px 0;
+      background: var(--dark);
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .footer-logo {
+      font-size: 16px; font-weight: 800; letter-spacing: 0.12em;
+      color: var(--white); display: flex; align-items: center; gap: 8px;
+    }
+    .footer-logo svg { width: 18px; height: 18px; fill: var(--gold); }
+    .footer-sub {
+      font-size: 12px; color: var(--gray); letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+    .footer-copy {
+      font-size: 12px; color: var(--gray);
+    }
+
+    /* ─── RESPONSIVE ────────────────────────────────────────── */
+    @media (max-width: 960px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .container { padding: 0 24px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr; gap: 48px; }
+      .team-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+      .prices-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .prices-grid { grid-template-columns: 1fr; }
+      .gallery-featured { height: 320px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ══════════════════════════════════════════════════ -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#hero">
+      <svg class="runner" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/>
+      </svg>
+      MOVE
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Serveis</a></li>
+      <li><a href="#space">L'Espai</a></li>
+      <li><a href="#team">L'Equip</a></li>
+      <li><a href="#prices">Preus</a></li>
+      <li><a href="#contact">Contacte</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Reserva ara</a>
+  </nav>
+
+  <!-- ═══ HERO ══════════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-bg">
+      <video autoplay muted loop playsinline preload="auto">
+        <source src="assets/move/hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Fisioteràpia · Readaptació Esportiva · Manresa</p>
+      <h1 class="hero-title">MOVE<br><span>CLÍNICA</span></h1>
+      <p class="hero-sub">Fisioteràpia · Readaptació</p>
+      <p class="hero-tagline">El teu moviment. El teu moment.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Reserva la teva sessió</a>
+        <a href="#services" class="btn-ghost">Descobreix els serveis</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ═══ MANIFESTO ═════════════════════════════════════════════ -->
+  <section id="manifesto">
+    <div class="manifesto-inner">
+      <p class="manifesto-quote reveal">
+        No només tractem lesions.<br/>
+        <strong>T'acompanyem fins al teu millor nivell</strong><br/>
+        amb ciència, precisió i cura real.
+      </p>
+      <div class="gold-line reveal reveal-delay-2" style="margin: 40px auto;"></div>
+      <p class="manifesto-small reveal reveal-delay-3">
+        Al centre MOVE apostem per un model d'atenció actiu, centrat en el pacient
+        i basat en l'evidència científica. Cada tractament és únic, perquè cada cos és diferent.
+        El nostre objectiu: que surtis millor del que has entrat, cada vegada.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ SERVICES ══════════════════════════════════════════════ -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header">
+        <p class="section-label reveal">Els nostres serveis</p>
+        <h2 class="section-title reveal reveal-delay-1">Tractament integral,<br/>resultat real.</h2>
+        <div class="gold-line reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-3">
+          Cada servei està dissenyat per cobrir totes les fases del procés: prevenció,
+          valoració, tractament i retorn a l'activitat.
+        </p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="24" r="18"/>
+              <path d="M24 10v14l8 8"/>
+              <path d="M16 32c2 2 4.5 3 8 3s6-1 8-3"/>
+            </svg>
+          </div>
+          <h3 class="service-name">Rehabilitació Esportiva</h3>
+          <p class="service-desc">Tractament especialitzat d'esquinços, tendinopaties, ruptures musculars i lesions de lligaments. Protocols actualitzats i basats en evidència.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 8C15.2 8 8 15.2 8 24s7.2 16 16 16 16-7.2 16-16"/>
+              <path d="M32 8l4 4-4 4"/>
+              <path d="M20 24l4 4 8-8"/>
+            </svg>
+          </div>
+          <h3 class="service-name">Recuperació Postquirúrgica</h3>
+          <p class="service-desc">Protocols específics per a lligament creuat anterior, pròtesis de genoll i maluc, i qualsevol intervenció musculoesquelètica.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 6l3 9h9l-7.3 5.3L31.9 30 24 25l-7.9 5 3.2-9.7L12 15h9z"/>
+              <path d="M24 30v12"/>
+            </svg>
+          </div>
+          <h3 class="service-name">Readaptació Esportiva</h3>
+          <p class="service-desc">Retorn progressiu i segur a l'activitat física i la competició. Programes personalitzats fins a recuperar el 100% del rendiment.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 36c0-6.6 5.4-12 12-12s12 5.4 12 12"/>
+              <circle cx="24" cy="18" r="6"/>
+              <path d="M8 36h32"/>
+            </svg>
+          </div>
+          <h3 class="service-name">Prevenció de Lesions</h3>
+          <p class="service-desc">Avaluació de factors de risc i programes preventius personalitzats per a esportistes amateurs i professionals.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 20c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+              <path d="M12 28h24M24 28v12"/>
+              <path d="M20 40h8"/>
+            </svg>
+          </div>
+          <h3 class="service-name">Fisioteràpia Manual</h3>
+          <p class="service-desc">Tècniques manuals avançades combinades amb exercici terapèutic actiu. Tractament efectiu i centrat en l'autonomia del pacient.</p>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <div class="service-icon">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="12" width="32" height="24" rx="2"/>
+              <path d="M16 20h16M16 26h10"/>
+              <path d="M20 34l-4 6M28 34l4 6"/>
+            </svg>
+          </div>
+          <h3 class="service-name">Valoració Funcional</h3>
+          <p class="service-desc">Anàlisi individualitzada del moviment, rang articular i patrons motors. Diagnòstic precís com a punt de partida de tot tractament.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SPACE GALLERY ═════════════════════════════════════════ -->
+  <section id="space">
+    <div class="container">
+      <div class="space-intro">
+        <p class="section-label reveal">L'Espai</p>
+        <h2 class="section-title reveal reveal-delay-1">Un entorn pensat<br/>per a la teva recuperació.</h2>
+        <div class="gold-line reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-3">
+          MOVE compta amb zones especialitzades per a cada fase del tractament:
+          recepció, boxes privats, sala d'entrenament funcional i zona de valoració.
+        </p>
+      </div>
+
+      <div class="gallery-featured reveal">
+        <img src="assets/move/image5.png" alt="Sala d'entrenament MOVE" />
+        <div class="gallery-featured-caption">Sala d'Entrenament Principal</div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item reveal reveal-delay-1">
+          <img src="assets/move/image2.png" alt="Recepció MOVE Clínica" />
+          <div class="gallery-item-caption">Recepció</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2">
+          <img src="assets/move/image10.png" alt="Box de tractament" />
+          <div class="gallery-item-caption">Box de Tractament</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3">
+          <img src="assets/move/image3.png" alt="Sala de material" />
+          <div class="gallery-item-caption">Sala de Material</div>
+        </div>
+        <div class="gallery-item reveal">
+          <img src="assets/move/image8.png" alt="Zona d'anàlisi i valoració" />
+          <div class="gallery-item-caption">Anàlisi · Valoració · Rendiment</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1">
+          <img src="assets/move/image7.png" alt="Corredor MOVE" />
+          <div class="gallery-item-caption">L'Accés</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2">
+          <img src="assets/move/image6.png" alt="Vestuaris" />
+          <div class="gallery-item-caption">Vestuaris</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHY MOVE ══════════════════════════════════════════════ -->
+  <section id="why">
+    <div class="container">
+      <p class="section-label reveal">Per què MOVE?</p>
+      <h2 class="section-title reveal reveal-delay-1">La qualitat no és<br/>un plus. És la base.</h2>
+      <div class="why-grid">
+
+        <div class="why-item reveal">
+          <div class="why-number">01</div>
+          <div class="why-body">
+            <h3 class="why-title">Evidència científica</h3>
+            <p class="why-desc">Cada decisió clínica està sustentada per la recerca més actual. Tractem el que funciona, no el que s'ha fet sempre.</p>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-1">
+          <div class="why-number">02</div>
+          <div class="why-body">
+            <h3 class="why-title">Tracte 100% individualitzat</h3>
+            <p class="why-desc">No hi ha dos pacients iguals. El teu pla de tractament és únic, adaptat als teus objectius i al teu cos.</p>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-2">
+          <div class="why-number">03</div>
+          <div class="why-body">
+            <h3 class="why-title">Especialització esportiva</h3>
+            <p class="why-desc">L'equip compta amb formació específica en fisioteràpia esportiva, traumatologia i readaptació funcional.</p>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-3">
+          <div class="why-number">04</div>
+          <div class="why-body">
+            <h3 class="why-title">Seguiment continu</h3>
+            <p class="why-desc">T'acompanyem durant tot el procés. Monitoritzem el teu progrés i adaptem el tractament en cada fase.</p>
+          </div>
+        </div>
+
+        <div class="why-item reveal">
+          <div class="why-number">05</div>
+          <div class="why-body">
+            <h3 class="why-title">Pacient actiu i empoderat</h3>
+            <p class="why-desc">T'ensenyem a entendre el teu cos, a moure't millor i a prevenir futures lesions. L'autonomia és part del tractament.</p>
+          </div>
+        </div>
+
+        <div class="why-item reveal reveal-delay-1">
+          <div class="why-number">06</div>
+          <div class="why-body">
+            <h3 class="why-title">Millora contínua</h3>
+            <p class="why-desc">Revisem constantment protocols i resultats. Un centre que no millora, s'estanca. Nosaltres no ens aturem.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TEAM ══════════════════════════════════════════════════ -->
+  <section id="team">
+    <div class="container">
+      <div class="team-header">
+        <p class="section-label reveal">L'Equip</p>
+        <h2 class="section-title reveal reveal-delay-1">Tres fisioterapeutes.<br/>Una sola missió.</h2>
+        <div class="gold-line reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-3">
+          Graduats en Fisioteràpia per la UManresa (2022–2026), amb formació avançada
+          en les àrees més demandades de la fisioteràpia esportiva.
+        </p>
+      </div>
+      <div class="team-grid">
+
+        <div class="team-card reveal">
+          <div class="team-avatar">
+            <img src="assets/move/arnau.jpg" alt="Arnau Puentes — Fisioterapeuta" />
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Arnau Puentes</h3>
+            <p class="team-role">Fisioterapeuta · Co-fundador</p>
+            <ul class="team-spec">
+              <li>Graduat en Fisioteràpia — UManresa</li>
+              <li>Curs de Punció Seca</li>
+              <li>Màster en Readaptació de Lesions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-card reveal reveal-delay-1">
+          <div class="team-avatar">
+            <img src="assets/move/ferran.jpg" alt="Ferran Purtí — Fisioterapeuta" />
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Ferran Purtí</h3>
+            <p class="team-role">Fisioterapeuta · Co-fundador</p>
+            <ul class="team-spec">
+              <li>Graduat en Fisioteràpia — UManresa</li>
+              <li>Màster en Dolor Miofascial</li>
+              <li>Especialista en Teràpia Manual</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="team-card reveal reveal-delay-2">
+          <div class="team-avatar">
+            <img src="assets/move/pau.jpg" alt="Pau Rebollo — Fisioterapeuta" />
+          </div>
+          <div class="team-info">
+            <h3 class="team-name">Pau Rebollo</h3>
+            <p class="team-role">Fisioterapeuta · Co-fundador</p>
+            <ul class="team-spec">
+              <li>Graduat en Fisioteràpia — UManresa</li>
+              <li>Màster en Fisioteràpia Cardiorespiratòria</li>
+              <li>Especialista en Valoració Funcional</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRICES ════════════════════════════════════════════════ -->
+  <section id="prices">
+    <div class="container">
+      <div class="prices-header">
+        <p class="section-label reveal">Tarifes</p>
+        <h2 class="section-title reveal reveal-delay-1">Inversió en<br/>el teu rendiment.</h2>
+        <div class="gold-line reveal reveal-delay-2"></div>
+        <p class="section-desc reveal reveal-delay-3">
+          Preus transparents i coherents amb la qualitat del servei.
+          Tots els packs inclouen valoració inicial gratuïta.
+        </p>
+      </div>
+      <div class="prices-grid">
+
+        <div class="price-card reveal">
+          <p class="price-name">Sessió Individual</p>
+          <div class="price-amount"><span>€</span>55</div>
+          <p class="price-note">per sessió · 50 min</p>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li class="price-feature">Valoració inicial inclosa</li>
+            <li class="price-feature">Pla de tractament personalitzat</li>
+            <li class="price-feature">Fisioteràpia manual i exercici</li>
+            <li class="price-feature">Informe de sessió</li>
+          </ul>
+          <a href="#contact" class="price-cta price-cta-dark">Reservar</a>
+        </div>
+
+        <div class="price-card reveal reveal-delay-1">
+          <p class="price-name">Pack 5 Sessions</p>
+          <div class="price-amount"><span>€</span>250</div>
+          <p class="price-note">50€/sessió</p>
+          <p class="price-savings">Estalvia 25€</p>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li class="price-feature">Tot el de la sessió individual</li>
+            <li class="price-feature">Seguiment de progrés</li>
+            <li class="price-feature">Exercicis per fer a casa</li>
+            <li class="price-feature">Validesa 3 mesos</li>
+          </ul>
+          <a href="#contact" class="price-cta price-cta-dark">Reservar</a>
+        </div>
+
+        <div class="price-card featured reveal reveal-delay-2">
+          <div class="price-badge">Més popular</div>
+          <p class="price-name">Pack 10 Sessions</p>
+          <div class="price-amount"><span>€</span>450</div>
+          <p class="price-note">45€/sessió</p>
+          <p class="price-savings">Estalvia 100€</p>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li class="price-feature">Tot el de 5 sessions</li>
+            <li class="price-feature">Reavluació a la 5a sessió</li>
+            <li class="price-feature">Programa de prevenció inclòs</li>
+            <li class="price-feature">Validesa 6 mesos</li>
+          </ul>
+          <a href="#contact" class="price-cta price-cta-light">Reservar</a>
+        </div>
+
+        <div class="price-card reveal reveal-delay-3">
+          <p class="price-name">Programa Readaptació</p>
+          <div class="price-amount" style="font-size:38px; letter-spacing:-0.02em; line-height:1.2;">A mida</div>
+          <p class="price-note">Consulta personalitzada</p>
+          <div class="price-divider"></div>
+          <ul class="price-features">
+            <li class="price-feature">Valoració funcional completa</li>
+            <li class="price-feature">Pla de readaptació progressiu</li>
+            <li class="price-feature">Retorn guiat a la competició</li>
+            <li class="price-feature">Durada adaptada a la lesió</li>
+          </ul>
+          <a href="#contact" class="price-cta price-cta-dark">Consultar</a>
+        </div>
+
+      </div>
+      <p class="price-note-bottom reveal">
+        Tots els preus inclouen IVA. Primera consulta <strong style="color:var(--gold)">gratuïta i sense compromís</strong>.<br/>
+        Acceptem assegurances mèdiques. Consulta'ns per a acords amb clubs esportius.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══════════════════════════════════════════════ -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-left">
+          <p class="section-label reveal">Contacte</p>
+          <h2 class="section-title reveal reveal-delay-1">Comença el teu<br/>procés avui.</h2>
+          <div class="gold-line reveal reveal-delay-2"></div>
+          <p class="section-desc reveal reveal-delay-3" style="margin-bottom: 0;">
+            Omple el formulari i t'anomenem en menys de 24h. La primera consulta és gratuïta.
+          </p>
+          <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nom</label>
+                <input type="text" placeholder="El teu nom" required />
+              </div>
+              <div class="form-group">
+                <label>Cognoms</label>
+                <input type="text" placeholder="Els teus cognoms" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Telèfon</label>
+                <input type="tel" placeholder="6XX XXX XXX" required />
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="correu@exemple.com" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Servei d'interès</label>
+              <select>
+                <option value="">Selecciona un servei…</option>
+                <option>Rehabilitació Esportiva</option>
+                <option>Recuperació Postquirúrgica</option>
+                <option>Readaptació Esportiva</option>
+                <option>Prevenció de Lesions</option>
+                <option>Fisioteràpia Manual</option>
+                <option>Valoració Funcional</option>
+                <option>No ho sé encara</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Descripció breu de la lesió o motiu</label>
+              <textarea placeholder="Explica'ns breument el teu cas perquè puguem preparar la primera visita…"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Enviar consulta →</button>
+          </form>
+        </div>
+        <div class="contact-right reveal reveal-delay-2">
+          <div class="contact-info-block">
+            <p class="contact-info-label">Ubicació</p>
+            <p class="contact-info-value">Manresa, Catalunya</p>
+            <p class="contact-info-sub">Adreça definitiva pendent de confirmar</p>
+            <div class="map-block">
+              <div class="map-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                <p>Manresa, Catalunya</p>
+              </div>
+            </div>
+          </div>
+          <div class="contact-info-block">
+            <p class="contact-info-label">Horari</p>
+            <p class="contact-info-value">Dl–Dv: 8:00 – 20:00</p>
+            <p class="contact-info-sub">Dissabtes amb cita prèvia</p>
+          </div>
+          <div class="contact-info-block">
+            <p class="contact-info-label">Xarxes socials</p>
+            <p class="contact-info-value">Segueix-nos</p>
+            <div class="social-links">
+              <a href="#" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                @moveclinica
+              </a>
+              <a href="#" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/></svg>
+                @moveclinica
+              </a>
+            </div>
+          </div>
+          <div class="contact-info-block" style="border-bottom:none;">
+            <p class="contact-info-label">Email</p>
+            <p class="contact-info-value">moveclinica@gmail.com</p>
+            <p class="contact-info-sub">Resposta en menys de 24h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-logo">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9.8 8.9L7 23h2.1l1.8-8 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7"/>
+            </svg>
+            MOVE CLÍNICA
+          </div>
+          <p class="footer-sub">El teu moviment. El teu moment.</p>
+        </div>
+        <p class="footer-copy">© 2026 MOVE Clínica · Fisioteràpia & Readaptació · Manresa</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ JAVASCRIPT ════════════════════════════════════════════ -->
+  <script>
+    /* NAV scroll effect */
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    /* Scroll reveal */
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => io.observe(el));
+
+    /* Parallax hero — suave en el vídeo */
+    const heroBg = document.querySelector('.hero-bg video');
+    window.addEventListener('scroll', () => {
+      if (heroBg && window.scrollY < window.innerHeight) {
+        heroBg.style.transform = `translateY(${window.scrollY * 0.18}px) scale(1.04)`;
+      }
+    }, { passive: true });
+
+    /* Form submit */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      btn.textContent = 'Enviat! ✓';
+      btn.style.background = '#4CAF50';
+      btn.style.color = '#fff';
+      setTimeout(() => {
+        btn.textContent = 'Enviar consulta →';
+        btn.style.background = '';
+        btn.style.color = '';
+        e.target.reset();
+      }, 3000);
+    }
+
+    /* Smooth active nav link highlight */
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navLinks.forEach(l => l.style.color = '');
+          const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+          if (active) active.style.color = 'var(--gold)';
+        }
+      });
+    }, { threshold: 0.4 });
+    sections.forEach(s => sectionObserver.observe(s));
+  </script>
+</body>
+</html>
